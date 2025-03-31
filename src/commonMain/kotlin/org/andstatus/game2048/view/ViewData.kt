@@ -2,6 +2,7 @@ package org.andstatus.game2048.view
 
 import korlibs.event.PauseEvent
 import korlibs.image.font.Font
+import korlibs.io.async.launch
 import korlibs.io.concurrent.atomic.korAtomic
 import korlibs.io.lang.Closeable
 import korlibs.korge.animate.Animator
@@ -23,7 +24,6 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.defaultLanguage
 import org.andstatus.game2048.gameIsLoading

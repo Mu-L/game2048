@@ -1,5 +1,6 @@
 package org.andstatus.game2048.presenter
 
+import korlibs.io.async.launch
 import korlibs.io.concurrent.atomic.incrementAndGet
 import korlibs.io.concurrent.atomic.korAtomic
 import korlibs.io.lang.use
@@ -15,7 +16,6 @@ import korlibs.math.interpolation.Easing
 import korlibs.time.milliseconds
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.andstatus.game2048.ai.AiAlgorithm
 import org.andstatus.game2048.ai.AiPlayer

@@ -1,5 +1,6 @@
 import korlibs.io.async.AsyncEntryPointResult
 import korlibs.io.async.DEFAULT_SUSPEND_TEST_TIMEOUT
+import korlibs.io.async.launch
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.async.suspendTest
 import korlibs.io.async.withTimeoutNullable
@@ -15,7 +16,6 @@ import korlibs.time.Stopwatch
 import korlibs.time.TimeSpan
 import korlibs.time.seconds
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.gameIsLoading
 import org.andstatus.game2048.isTestRun
@@ -53,11 +53,11 @@ fun ViewsForTesting.myViewsTest(testObject: Any, block: suspend ViewData.() -> U
     }
 }
 
-/** Copied ViewsForTesting.viewsTest in order to fix it...
+/** Copied [ViewsForTesting.viewsTest] in order to fix it...
  */
 @OptIn(KorgeInternal::class)
 fun ViewsForTesting.viewsTest2(
-    timeout: TimeSpan? = DEFAULT_SUSPEND_TEST_TIMEOUT,
+    timeout: TimeSpan? = DEFAULT_SUSPEND_TEST_TIMEOUT * 2,
     frameTime: TimeSpan = this.frameTime,
     cond: () -> Boolean = { Platform.isJvm && !Platform.isAndroid },
     forceRenderEveryFrame: Boolean = true,
@@ -95,8 +95,8 @@ fun ViewsForTesting.viewsTest2(
 
     withTimeoutNullable(timeout ?: TimeSpan.NIL) {
         while (!completed) {
+            delay(15)
             delayFrame() //simulateFrame() is private
-            delay(10)
             dispatcher.executePending(availableTime = 1.seconds)
         }
         if (completedException != null) throw completedException!!

@@ -1,5 +1,6 @@
 package org.andstatus.game2048.model
 
+import korlibs.io.async.launch
 import korlibs.io.concurrent.atomic.KorAtomicInt
 import korlibs.io.concurrent.atomic.KorAtomicRef
 import korlibs.io.concurrent.atomic.korAtomic
@@ -7,7 +8,6 @@ import korlibs.time.DateTimeTz
 import korlibs.time.weeks
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.gameIsLoading
 import org.andstatus.game2048.keyCurrentGameId
