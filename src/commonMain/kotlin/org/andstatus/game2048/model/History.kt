@@ -1,13 +1,13 @@
 package org.andstatus.game2048.model
 
-import korlibs.io.async.launch
-import korlibs.io.concurrent.atomic.KorAtomicInt
-import korlibs.io.concurrent.atomic.KorAtomicRef
-import korlibs.io.concurrent.atomic.korAtomic
 import korlibs.time.DateTimeTz
 import korlibs.time.weeks
+import kotlinx.atomicfu.AtomicInt
+import kotlinx.atomicfu.AtomicRef
+import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.gameIsLoading
 import org.andstatus.game2048.keyCurrentGameId
@@ -24,13 +24,13 @@ class History(
     val myContext: MyContext
 ) {
     private val stubGame: GameRecord = GameRecord.newEmpty(myContext, stubGameId).load()
-    private val recentGamesRef: KorAtomicRef<List<ShortRecord>> = korAtomic(emptyList())
+    private val recentGamesRef: AtomicRef<List<ShortRecord>> = atomic(emptyList())
     val recentGames get() = recentGamesRef.value
-    private val currentGameRef: KorAtomicRef<GameRecord> = korAtomic(stubGame)
+    private val currentGameRef: AtomicRef<GameRecord> = atomic(stubGame)
     val currentGame: GameRecord get() = currentGameRef.value
 
     // 1. Info on previous games
-    private val bestScoreStoredRef: KorAtomicInt = korAtomic(0)
+    private val bestScoreStoredRef: AtomicInt = atomic(0)
     val bestScore: Int get() = max(currentGame.score, bestScoreStoredRef.value)
 
     // 2. This game, see for the inspiration https://en.wikipedia.org/wiki/Portable_Game_Notation

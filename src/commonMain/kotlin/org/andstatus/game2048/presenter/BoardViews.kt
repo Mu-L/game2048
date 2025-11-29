@@ -1,6 +1,6 @@
 package org.andstatus.game2048.presenter
 
-import korlibs.io.concurrent.atomic.KorAtomicRef
+import kotlinx.atomicfu.AtomicRef
 import org.andstatus.game2048.initAtomicReference
 import org.andstatus.game2048.model.GamePosition
 import org.andstatus.game2048.model.PlacedPiece
@@ -9,28 +9,31 @@ import org.andstatus.game2048.view.ViewData
 
 /** @author yvolk@yurivolkov.com */
 class BoardViews(val viewData: ViewData, blocksIn: List<PlacedBlock> = emptyList()) {
-    private val blocksRef: KorAtomicRef<List<PlacedBlock>> = initAtomicReference(blocksIn)
+    private val blocksRef: AtomicRef<List<PlacedBlock>> = initAtomicReference(blocksIn)
     val blocks get() = blocksRef.value
 
     val blocksOnBoard: List<List<Block>>
         get() = viewData.presenter.model.gamePosition.board.array
-            .map { square -> blocks.filter { it.square == square} }
+            .map { square -> blocks.filter { it.square == square } }
             .map { it.map { it.block } }
 
     fun getAll(square: Square): List<Block> = blocks.filter { it.square == square }.map { it.block }
 
     operator fun get(placedPiece: PlacedPiece): Block? = blocks.filter {
-        it.block.piece == placedPiece.piece && it.square == placedPiece.square }
-            .map { it.block }
-            .firstOrNull()
+        it.block.piece == placedPiece.piece && it.square == placedPiece.square
+    }
+        .map { it.block }
+        .firstOrNull()
 
     fun add(placedPiece: PlacedPiece, block: Block) {
         modify({ blocks1 -> blocks1 + PlacedBlock(block, placedPiece.square) }, true)
     }
 
     fun move(placedPiece: PlacedPiece, block: Block) {
-        modify({ blocks1 -> blocks1
-            .filter { it.block != block } + PlacedBlock(block, placedPiece.square) }, false)
+        modify({ blocks1 ->
+            blocks1
+                .filter { it.block != block } + PlacedBlock(block, placedPiece.square)
+        }, false)
     }
 
     fun load(position: GamePosition) {
@@ -49,8 +52,8 @@ class BoardViews(val viewData: ViewData, blocksIn: List<PlacedBlock> = emptyList
     fun copy() = BoardViews(viewData, blocks)
 
     fun addBlock(destination: PlacedPiece): Block = Block(destination.piece, viewData)
-            .addTo(viewData.mainView.boardView, destination.square)
-            .also { add(destination, it) }
+        .addTo(viewData.mainView.boardView, destination.square)
+        .also { add(destination, it) }
 
     fun removeBlock(block: Block): Block? =
         blocks.find { it.block == block }

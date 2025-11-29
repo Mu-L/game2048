@@ -4,7 +4,6 @@ import korlibs.io.async.launch
 import korlibs.io.async.runBlockingNoJs
 import korlibs.io.async.suspendTest
 import korlibs.io.async.withTimeoutNullable
-import korlibs.io.concurrent.atomic.korAtomic
 import korlibs.korge.KorgeConfig
 import korlibs.korge.KorgeRunner
 import korlibs.korge.internal.KorgeInternal
@@ -15,7 +14,10 @@ import korlibs.time.NIL
 import korlibs.time.Stopwatch
 import korlibs.time.TimeSpan
 import korlibs.time.seconds
+import korlibs.time.toFastDuration
+import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.gameIsLoading
 import org.andstatus.game2048.isTestRun
@@ -37,7 +39,7 @@ fun ViewsForTesting.myViewsTest(testObject: Any, block: suspend ViewData.() -> U
         myLog("isTestRun was set")
     }
 
-    val testWasExecuted = korAtomic(false)
+    val testWasExecuted = atomic(false)
     runBlockingNoJs {
         myLog("Test $testObject started")
         viewsTest2(timeout = TimeSpan(60000.0)) {
@@ -68,7 +70,7 @@ fun ViewsForTesting.viewsTest2(
     KorgeRunner.prepareViewsBase(
         views,
         gameWindow,
-        fixedSizeStep = frameTime,
+        fixedSizeStep = frameTime.toFastDuration(),
         forceRenderEveryFrame = forceRenderEveryFrame
     )
 

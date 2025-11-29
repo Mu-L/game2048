@@ -1,18 +1,17 @@
 package org.andstatus.game2048.presenter
 
-import korlibs.io.async.launch
-import korlibs.io.concurrent.atomic.KorAtomicInt
-import korlibs.io.concurrent.atomic.incrementAndGet
 import korlibs.time.Stopwatch
 import korlibs.time.millisecondsLong
+import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.andstatus.game2048.ai.AiResult
 import org.andstatus.game2048.model.GameModeEnum
 import org.andstatus.game2048.myLog
 
-private val aiLaunchCounter = KorAtomicInt(0)
+private val aiLaunchCounter = atomic(0)
 
 /** @author yvolk@yurivolkov.com */
 fun CoroutineScope.showAiTip(presenter: Presenter) = launch {

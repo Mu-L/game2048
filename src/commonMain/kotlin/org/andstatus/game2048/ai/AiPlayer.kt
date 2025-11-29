@@ -1,10 +1,10 @@
 package org.andstatus.game2048.ai
 
-import korlibs.io.concurrent.atomic.KorAtomicBoolean
-import korlibs.io.concurrent.atomic.KorAtomicRef
 import korlibs.time.Stopwatch
 import korlibs.time.millisecondsInt
 import korlibs.time.seconds
+import kotlinx.atomicfu.AtomicRef
+import kotlinx.atomicfu.atomic
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.meanBy
 import org.andstatus.game2048.model.GamePosition
@@ -20,8 +20,8 @@ import kotlin.math.pow
 /** @author yvolk@yurivolkov.com */
 class AiPlayer(val myContext: MyContext) {
     val FAILURE_IS_WORKING = Result.failure<AiResult>(Exception("AiPlayer is working"))
-    private val stopWatchRef: KorAtomicRef<Stopwatch?> = KorAtomicRef(null)
-    private val doStop = KorAtomicBoolean(true)
+    private val stopWatchRef: AtomicRef<Stopwatch?> = atomic(null)
+    private val doStop = atomic(true)
     private val maxSeconds: Int = when (myContext.settings.aiAlgorithm) {
         AiAlgorithm.RANDOM -> 5
         AiAlgorithm.MAX_SCORE_OF_ONE_MOVE -> 5

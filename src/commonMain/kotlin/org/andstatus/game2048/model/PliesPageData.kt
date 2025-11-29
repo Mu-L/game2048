@@ -1,8 +1,8 @@
 package org.andstatus.game2048.model
 
-import korlibs.io.concurrent.atomic.KorAtomicRef
 import korlibs.io.serialization.json.Json
 import korlibs.io.serialization.json.toJson
+import kotlinx.atomicfu.AtomicRef
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.initAtomicReference
 import org.andstatus.game2048.myLog
@@ -100,7 +100,7 @@ class PliesPageData(val myContext: MyContext) {
 
     companion object {
         private const val maxPagesStored = 5
-        private val pliesMapRef: KorAtomicRef<Map<Int, List<Ply>>> = initAtomicReference(emptyMap())
+        private val pliesMapRef: AtomicRef<Map<Int, List<Ply>>> = initAtomicReference(emptyMap())
 
         fun isLoaded(gameId: Int, pageNumber: Int): Boolean = pliesMapRef.value[mapKey(gameId, pageNumber)] != null
 

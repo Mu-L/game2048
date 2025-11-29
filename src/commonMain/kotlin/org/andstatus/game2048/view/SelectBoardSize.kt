@@ -1,11 +1,11 @@
 package org.andstatus.game2048.view
 
-import korlibs.io.async.launch
 import korlibs.korge.time.delay
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
 import korlibs.korge.view.position
 import korlibs.time.milliseconds
+import kotlinx.coroutines.launch
 
 fun ViewData.selectBoardSize() = myWindow("select_board_size") {
     var buttons: List<Container?> = emptyList()

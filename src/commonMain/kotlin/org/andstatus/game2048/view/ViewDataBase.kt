@@ -1,8 +1,7 @@
 package org.andstatus.game2048.view
 
-import korlibs.io.concurrent.atomic.incrementAndGet
-import korlibs.io.concurrent.atomic.korAtomic
 import korlibs.korge.view.Stage
+import kotlinx.atomicfu.atomic
 import org.andstatus.game2048.defaultPortraitGameWindowSize
 import org.andstatus.game2048.defaultPortraitRatio
 import org.andstatus.game2048.defaultPortraitTextSize
@@ -133,7 +132,7 @@ class ViewDataQuick(override val gameStage: Stage) : ViewDataBase {
     }
 
     companion object {
-        private val nextIdHolder = korAtomic(0)
+        private val nextIdHolder = atomic(0)
         fun nextId(): Int = nextIdHolder.incrementAndGet()
     }
 }

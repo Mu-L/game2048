@@ -3,7 +3,6 @@ package org.andstatus.game2048.view
 import korlibs.image.color.Colors
 import korlibs.image.format.readBitmap
 import korlibs.image.text.TextAlignment
-import korlibs.io.async.launch
 import korlibs.io.file.std.resourcesVfs
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
@@ -17,6 +16,7 @@ import korlibs.korge.view.size
 import korlibs.korge.view.text
 import korlibs.math.geom.RectCorners
 import korlibs.math.geom.Size
+import kotlinx.coroutines.launch
 import org.andstatus.game2048.myLog
 
 suspend fun ViewData.barButton(icon: String, handler: () -> Unit): Container = Container().apply {

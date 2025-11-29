@@ -1,6 +1,6 @@
 package org.andstatus.game2048.model
 
-import korlibs.io.concurrent.atomic.korAtomic
+import kotlinx.atomicfu.atomic
 
 private const val keyPageNumber = "page"
 private const val keyFirstPlyNumber = "first"
@@ -26,7 +26,7 @@ class PliesPage(
 
     val loaded get() = isFirstEmpty || PliesPageData.isLoaded(shortRecord.id, pageNumber)
     val saved get() = savedRef.value
-    private val savedRef = korAtomic(isFirstEmpty)
+    private val savedRef = atomic(isFirstEmpty)
 
     val plies: List<Ply> get() = if (isFirstEmpty) emptyList() else PliesPageData.getPlies(shortRecord.id, pageNumber)
 

@@ -1,10 +1,10 @@
 package org.andstatus.game2048
 
-import korlibs.io.concurrent.atomic.KorAtomicRef
 import korlibs.io.lang.substr
 import korlibs.logger.Console
 import korlibs.time.Stopwatch
 import korlibs.time.seconds
+import kotlinx.atomicfu.AtomicRef
 import org.andstatus.game2048.presenter.Presenter
 
 private const val platformSourceFolder = "jvmMain"
@@ -24,7 +24,7 @@ fun timeIsUp(seconds: Int): () -> Boolean {
     return { stopwatch.elapsed.seconds >= seconds }
 }
 
-fun <T> KorAtomicRef<T>.update(updater: (T) -> T): T {
+fun <T> AtomicRef<T>.update(updater: (T) -> T): T {
     var newValue: T
     do {
         val oldValue = value

@@ -2,10 +2,10 @@ package org.andstatus.game2048
 
 import korlibs.image.font.BitmapFont
 import korlibs.image.font.readBitmapFont
-import korlibs.io.concurrent.atomic.KorAtomicRef
 import korlibs.io.file.std.resourcesVfs
 import korlibs.io.lang.parseInt
 import korlibs.korge.view.Stage
+import kotlinx.atomicfu.AtomicRef
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,7 +19,7 @@ class MyContext(private val stage: Stage) {
                 + Dispatchers.Default
         )
     val storage: MyStorage = MyStorage.load(stage)
-    private val settingsRef: KorAtomicRef<Settings> = initAtomicReference(
+    private val settingsRef: AtomicRef<Settings> = initAtomicReference(
         Settings.load(storage)
     )
     val settings: Settings get() = settingsRef.value

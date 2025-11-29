@@ -1,9 +1,5 @@
 package org.andstatus.game2048.presenter
 
-import korlibs.io.async.launch
-import korlibs.io.concurrent.atomic.incrementAndGet
-import korlibs.io.concurrent.atomic.korAtomic
-import korlibs.io.lang.use
 import korlibs.korge.animate.Animator
 import korlibs.korge.animate.animate
 import korlibs.korge.animate.block
@@ -14,8 +10,10 @@ import korlibs.korge.view.Text
 import korlibs.korge.view.onNextFrame
 import korlibs.math.interpolation.Easing
 import korlibs.time.milliseconds
+import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.andstatus.game2048.ai.AiAlgorithm
 import org.andstatus.game2048.ai.AiPlayer
@@ -57,15 +55,15 @@ class Presenter(val view: ViewData, history: History) {
     val model = Model(history)
     val aiPlayer: AiPlayer = AiPlayer(model.myContext)
     private val multithreadedScope: CoroutineScope get() = model.myContext.multithreadedScope
-    val mainViewShown = korAtomic(false)
-    val isPresenting = korAtomic(false)
-    val presentedCounter = korAtomic(0L)
+    val mainViewShown = atomic(false)
+    val isPresenting = atomic(false)
+    val presentedCounter = atomic(0L)
     val score get() = model.score
     val bestScore get() = model.bestScore
     val retries get() = model.gamePosition.retries
     var boardViews = BoardViews(view)
     val gameMode get() = model.gameMode
-    var clickCounter = korAtomic(0)
+    var clickCounter = atomic(0)
 
     private fun CoroutineScope.presentGameClock(model: Model, textSupplier: () -> Text) = launch {
         while (true) {
@@ -580,7 +578,7 @@ class Presenter(val view: ViewData, history: History) {
         }
     }
 
-    private val showMainViewStarted = korAtomic(false)
+    private val showMainViewStarted = atomic(false)
     private fun showMainView() {
         if (showMainViewStarted.compareAndSet(false, true)) {
             try {

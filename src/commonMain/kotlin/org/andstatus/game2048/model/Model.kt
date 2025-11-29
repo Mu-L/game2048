@@ -1,13 +1,13 @@
 package org.andstatus.game2048.model
 
-import korlibs.io.concurrent.atomic.KorAtomicRef
-import korlibs.io.concurrent.atomic.korAtomic
+import kotlinx.atomicfu.AtomicRef
+import kotlinx.atomicfu.atomic
 import org.andstatus.game2048.MyContext
 
 /** @author yvolk@yurivolkov.com */
 class Model(val history: History) {
     val myContext: MyContext = history.myContext
-    private val gamePositionRef = korAtomic(GamePosition(myContext.settings.defaultBoard))
+    private val gamePositionRef = atomic(GamePosition(myContext.settings.defaultBoard))
     val gamePosition get() = gamePositionRef.value
 
     val moveNumber: Int get() = gamePosition.moveNumber
@@ -20,7 +20,7 @@ class Model(val history: History) {
     val score get() = gamePosition.score
 
     val gameMode: GameMode get() = history.gameMode
-    val nextComputerPlacedPeace: KorAtomicRef<PlacedPiece?> = korAtomic(null)
+    val nextComputerPlacedPeace: AtomicRef<PlacedPiece?> = atomic(null)
 
     fun gotoBookmark(position: GamePosition): List<Ply> {
         gameMode.modeEnum = GameModeEnum.STOP

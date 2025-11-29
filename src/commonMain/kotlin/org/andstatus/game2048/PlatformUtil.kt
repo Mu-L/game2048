@@ -1,8 +1,8 @@
 package org.andstatus.game2048
 
-import korlibs.io.concurrent.atomic.KorAtomicRef
 import korlibs.korge.view.Stage
 import korlibs.math.geom.SizeInt
+import kotlinx.atomicfu.AtomicRef
 import org.andstatus.game2048.presenter.Presenter
 import kotlin.coroutines.CoroutineContext
 
@@ -18,6 +18,6 @@ expect fun Stage.loadJsonGameRecord(myContext: MyContext, sharedJsonHandler: (Se
 
 expect fun Stage.exitApp()
 
-expect fun <T> initAtomicReference(initial: T): KorAtomicRef<T>
+expect fun <T> initAtomicReference(initial: T): AtomicRef<T>
 
-expect fun <T> KorAtomicRef<T>.compareAndSetFixed(expect: T, update: T): Boolean
+expect fun <T> AtomicRef<T>.compareAndSetFixed(expect: T, update: T): Boolean

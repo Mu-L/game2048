@@ -1,7 +1,7 @@
 package org.andstatus.game2048.model
 
-import korlibs.io.concurrent.atomic.KorAtomicRef
 import korlibs.io.serialization.json.Json
+import kotlinx.atomicfu.AtomicRef
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.initAtomicReference
 import org.andstatus.game2048.myLog
@@ -19,7 +19,7 @@ class GamePlies(private val shortRecord: ShortRecord, private val reader: Sequen
     }
 
     private val emptyFirstPage = PliesPage(shortRecord, 1, 1, 0, emptyList(), true)
-    private val pagesRef: KorAtomicRef<List<PliesPage>> = initAtomicReference(listOf(emptyFirstPage))
+    private val pagesRef: AtomicRef<List<PliesPage>> = initAtomicReference(listOf(emptyFirstPage))
     private val pages: List<PliesPage> get() = pagesRef.value
     val lastPage get() = pages.last()
 

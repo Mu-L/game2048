@@ -1,17 +1,18 @@
 buildscript {
     repositories {
-		mavenCentral()
+        mavenCentral()
         google();
     }
     dependencies {
-		classpath 'com.android.tools.build:gradle:8.7.3'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23' }
+        classpath 'com.android.tools.build:gradle:8.12.3'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23'
+    }
 
 }
 
 repositories {
     mavenLocal()
-	mavenCentral()
+    mavenCentral()
     google()
 }
 
@@ -20,10 +21,10 @@ apply plugin: 'kotlin-android'
 
 android {
     namespace "org.andstatus.game2048"
-	compileOptions {
-		sourceCompatibility JavaVersion.VERSION_1_8
-		targetCompatibility JavaVersion.VERSION_1_8
-	}
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     installation {
         installOptions '-r'
         timeOutInMs 30 * 1000
@@ -42,18 +43,18 @@ android {
         }
         resources {
             excludes += [
-                'META-INF/DEPENDENCIES',
-                'META-INF/LICENSE',
-                'META-INF/LICENSE.txt',
-                'META-INF/license.txt',
-                'META-INF/NOTICE',
-                'META-INF/NOTICE.txt',
-                'META-INF/notice.txt',
-                'META-INF/LGPL*',
-                'META-INF/AL2.0',
-                'META-INF/*.kotlin_module',
-                '**/*.kotlin_metadata',
-                '**/*.kotlin_builtins'
+                    'META-INF/DEPENDENCIES',
+                    'META-INF/LICENSE',
+                    'META-INF/LICENSE.txt',
+                    'META-INF/license.txt',
+                    'META-INF/NOTICE',
+                    'META-INF/NOTICE.txt',
+                    'META-INF/notice.txt',
+                    'META-INF/LGPL*',
+                    'META-INF/AL2.0',
+                    'META-INF/*.kotlin_module',
+                    '**/*.kotlin_metadata',
+                    '**/*.kotlin_builtins'
             ]
         }
     }
@@ -83,16 +84,16 @@ android {
                     "../src/androidMain/kotlin"]
             assets.srcDirs += [
                     "../src/commonMain/resources"]
-            res.srcDirs  += [
+            res.srcDirs += [
                     "../src/commonMain/resources/res"]
         }
     }
 }
 
 dependencies {
-    def korgeVersion = '5.4.0'
+    def korgeVersion = '6.0.0'
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.23'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.0'
     implementation "com.soywiz.korge:korge-android:$korgeVersion"
     implementation "com.soywiz.korge:korge-core-android:$korgeVersion"
 }

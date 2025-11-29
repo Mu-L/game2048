@@ -1,11 +1,11 @@
 package org.andstatus.game2048.view
 
-import korlibs.io.async.launch
 import korlibs.korge.time.delay
 import korlibs.korge.view.Container
 import korlibs.korge.view.addTo
 import korlibs.korge.view.position
 import korlibs.time.milliseconds
+import kotlinx.coroutines.launch
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.ai.AiAlgorithm
 

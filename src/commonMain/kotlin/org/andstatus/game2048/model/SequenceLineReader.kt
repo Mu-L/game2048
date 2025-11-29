@@ -1,13 +1,12 @@
 package org.andstatus.game2048.model
 
-import korlibs.io.lang.Closeable
 import korlibs.io.lang.substr
 import korlibs.io.util.StrReader
 
 val emptySequenceLineReader: SequenceLineReader = SequenceLineReader(emptySequence())
 
 /** @author yvolk@yurivolkov.com */
-class SequenceLineReader(private val sequence: Sequence<String>) : Closeable {
+class SequenceLineReader(private val sequence: Sequence<String>) : AutoCloseable {
     private val iterator: Iterator<String> = sequence.iterator()
     private var previousRead: String? = null
     private var buffered: String = ""
@@ -45,7 +44,7 @@ class SequenceLineReader(private val sequence: Sequence<String>) : Closeable {
     }
 
     override fun close() {
-        if (sequence is Closeable) sequence.close()
+        if (sequence is AutoCloseable) sequence.close()
     }
 
     fun unRead(): SequenceLineReader {

@@ -2,9 +2,6 @@ package org.andstatus.game2048.view
 
 import korlibs.event.PauseEvent
 import korlibs.image.font.Font
-import korlibs.io.async.launch
-import korlibs.io.concurrent.atomic.korAtomic
-import korlibs.io.lang.Closeable
 import korlibs.korge.animate.Animator
 import korlibs.korge.animate.moveTo
 import korlibs.korge.input.singleTouch
@@ -19,11 +16,13 @@ import korlibs.platform.Platform
 import korlibs.time.Stopwatch
 import korlibs.time.TimeSpan
 import korlibs.time.minutes
+import kotlinx.atomicfu.atomic
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.andstatus.game2048.MyContext
 import org.andstatus.game2048.defaultLanguage
 import org.andstatus.game2048.gameIsLoading
@@ -108,7 +107,7 @@ class ViewData(
     val font: Font,
     val stringResources: StringResources,
     val gameColors: ColorTheme
-) : ViewDataBase by viewDataQuick, Closeable {
+) : ViewDataBase by viewDataQuick, AutoCloseable {
     val korgeCoroutineScope: CoroutineScope get() = gameStage.views
     val korgeCoroutineContext: CoroutineContext get() = gameStage.views.coroutineContext
 
@@ -121,8 +120,8 @@ class ViewData(
     var presenter: Presenter by Delegates.notNull()
     var mainView: MainView by Delegates.notNull()
 
-    val closeables = mutableListOf<Closeable>()
-    private val closedRef = korAtomic(false)
+    val closeables = mutableListOf<AutoCloseable>()
+    private val closedRef = atomic(false)
     val closed get() = closedRef.value
 
     fun reInitialize(handler: suspend ViewData.() -> Unit = {}) {
