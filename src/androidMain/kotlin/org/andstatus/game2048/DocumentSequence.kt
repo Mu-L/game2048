@@ -2,12 +2,11 @@ package org.andstatus.game2048
 
 import android.content.Context
 import android.net.Uri
-import korlibs.io.lang.Closeable
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.nio.charset.StandardCharsets
 
-class DocumentSequence(val context: Context, val uri: Uri) : Sequence<String>, Closeable {
+class DocumentSequence(val context: Context, val uri: Uri) : Sequence<String>, AutoCloseable {
     private val bufferLength = 20000
     private val buffer = CharArray(bufferLength)
     private val inputStream: InputStream? = context.contentResolver.openInputStream(uri)

@@ -4,8 +4,8 @@ buildscript {
         google();
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.12.3'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.23'
+        classpath 'com.android.tools.build:gradle:8.13.1'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0'
     }
 
 }
@@ -22,8 +22,8 @@ apply plugin: 'kotlin-android'
 android {
     namespace "org.andstatus.game2048"
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
     installation {
         installOptions '-r'
@@ -31,11 +31,6 @@ android {
     }
     lint {
         disable 'GradleCompatible'
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-        freeCompilerArgs += "-Xmulti-platform"
-        freeCompilerArgs += "-Xopt-in=kotlin"
     }
     packagingOptions {
         jniLibs {
@@ -58,11 +53,11 @@ android {
             ]
         }
     }
-    compileSdk 35
+    compileSdk = 36
     defaultConfig {
         applicationId 'org.andstatus.game2048'
         minSdkVersion 24
-        targetSdkVersion 35
+        targetSdkVersion 36
         versionCode 45
         versionName '1.16.0'
 
@@ -80,8 +75,8 @@ android {
         main {
             manifest.srcFile '../src/androidMain/AndroidManifest.xml'
             java.srcDirs += [
-                    "../src/commonMain/kotlin",
-                    "../src/androidMain/kotlin"]
+                        "../src/commonMain/kotlin",
+                        "../src/androidMain/kotlin"]
             assets.srcDirs += [
                     "../src/commonMain/resources"]
             res.srcDirs += [
@@ -90,10 +85,14 @@ android {
     }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    exclude '**/PlatformUtil.kt'
+}
+
 dependencies {
     def korgeVersion = '6.0.0'
 
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.1.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:2.2.0'
     implementation "com.soywiz.korge:korge-android:$korgeVersion"
     implementation "com.soywiz.korge:korge-core-android:$korgeVersion"
 }

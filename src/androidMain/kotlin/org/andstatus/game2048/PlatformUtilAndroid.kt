@@ -9,6 +9,7 @@ import korlibs.io.android.AndroidCoroutineContext
 import korlibs.korge.view.Stage
 import korlibs.math.geom.SizeInt
 import kotlinx.atomicfu.AtomicRef
+import kotlinx.atomicfu.atomic
 import org.andstatus.game2048.data.FileProvider
 import org.andstatus.game2048.presenter.Presenter
 import java.io.BufferedWriter
@@ -20,7 +21,7 @@ import kotlin.coroutines.CoroutineContext
 
 private const val platformSourceFolder = "androidMain"
 
-actual val CoroutineContext.gameWindowSize: SizeInt
+val CoroutineContext.gameWindowSize: SizeInt
     get() =
         mainActivity?.let { context ->
             val metrics = DisplayMetrics()
@@ -36,16 +37,16 @@ private val CoroutineContext.mainActivity: MyMainActivity?
     get() =
         get(AndroidCoroutineContext.Key)?.context as MyMainActivity?
 
-actual val CoroutineContext.isDarkThemeOn: Boolean
+val CoroutineContext.isDarkThemeOn: Boolean
     get() = mainActivity?.let { context ->
         val configuration = context.applicationContext.resources.configuration
         val currentNightMode = configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     } ?: false
 
-actual val defaultLanguage: String get() = java.util.Locale.getDefault().language
+val defaultLanguage: String get() = java.util.Locale.getDefault().language
 
-actual fun Presenter.shareText(actionTitle: String, fileName: String, value: Sequence<String>) {
+fun Presenter.shareText(actionTitle: String, fileName: String, value: Sequence<String>) {
     myLog("$platformSourceFolder, shareText '$fileName'")
     view.gameStage.mainActivity?.let { context ->
         val file = File(context.cacheDir, fileName)
@@ -80,13 +81,13 @@ actual fun Presenter.shareText(actionTitle: String, fileName: String, value: Seq
     }
 }
 
-actual fun Stage.loadJsonGameRecord(myContext: MyContext, sharedJsonHandler: (Sequence<String>) -> Unit) {
+fun Stage.loadJsonGameRecord(myContext: MyContext, sharedJsonHandler: (Sequence<String>) -> Unit) {
     myLog("$platformSourceFolder, loadJsonGameRecord")
     mainActivity?.openJsonGameRecord(sharedJsonHandler)
 }
 
-actual fun Stage.exitApp() = mainActivity?.finish() ?: Unit
+fun Stage.exitApp() = mainActivity?.finish() ?: Unit
 
-actual fun <T> initAtomicReference(initial: T): AtomicRef<T> = atomic(initial)
+fun <T> initAtomicReference(initial: T): AtomicRef<T> = atomic(initial)
 
-actual fun <T> AtomicRef<T>.compareAndSetFixed(expect: T, update: T): Boolean = compareAndSet(expect, update)
+fun <T> AtomicRef<T>.compareAndSetFixed(expect: T, update: T): Boolean = compareAndSet(expect, update)
